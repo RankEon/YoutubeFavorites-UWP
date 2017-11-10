@@ -1,0 +1,73 @@
+﻿<UserControl
+    x:Class="MyYoutubeFavorites.YtFavoritesDataTemplate"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MyYoutubeFavorites"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid Name="ItemBlock" Tag="{x:Bind YtLocalFavChannelList.channelId}" Background="LightGray" Width="200" Height="320" Margin="20,10,20,20" Tapped="ChannelGridTapped">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualStateGroup.Transitions>
+                </VisualStateGroup.Transitions>
+                <VisualState x:Name="NarrowLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ItemBlock.Width" Value="200" />
+                        <Setter Target="ItemBlock.Height" Value="275" />
+                        <Setter Target="GridHeadline.FontSize" Value="14" />
+                        <Setter Target="ChannelTitle.FontSize" Value="14" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="WideLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ItemBlock.Width" Value="300" />
+                        <Setter Target="ItemBlock.Height" Value="412" />
+                        <Setter Target="GridHeadline.FontSize" Value="14" />
+                        <Setter Target="ChannelTitle.FontSize" Value="20" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Name="ChannelTitle" Text="{x:Bind YtLocalFavChannelList.channelTitle}" FontSize="20pt" Grid.Row="1" TextWrapping="NoWrap" />
+        <Image Name="GridImage" Stretch="Uniform" Grid.Row="2">
+            <Image.Source>
+                <BitmapImage UriSource="{x:Bind YtLocalFavChannelList.imagePath}" />
+            </Image.Source>
+        </Image>
+        <Image Name="ImgNewIcon" Tag="{x:Bind YtLocalFavChannelList.isNew}" Grid.Row="2" Width="80" Height="80" VerticalAlignment="Top" HorizontalAlignment="Left" Source="Assets/new.gif" Visibility="Collapsed" DataContextChanged="ImageDataContextChanged" />
+        <TextBlock Name="GridHeadline" Text="{x:Bind YtLocalFavChannelList.videoTitle}" Grid.Row="3" TextWrapping="Wrap" />
+        <TextBlock Name="GridDate" Text="{x:Bind YtLocalFavChannelList.publishedAt}" Grid.Row="4" TextWrapping="Wrap"/>
+        <RelativePanel Grid.Row="5" VerticalAlignment="Bottom" Background="DarkSlateGray">
+            <Button Name="btnPlayVideo" Click="btnPlayVideo_Click" Tag="{x:Bind YtLocalFavChannelList.videoId}" ToolTipService.ToolTip="Play video" RelativePanel.AlignLeftWithPanel="True">
+                <Image Source="Assets/playbutton.png" Width="46" Height="29" />
+            </Button>
+            <Button Name="btnPlayOnYoutube" Click="btnPlayOnYoutube_Click" Tag="{x:Bind YtLocalFavChannelList.videoId}" ToolTipService.ToolTip="Play on YouTube" RelativePanel.RightOf="btnPlayVideo" Margin="2,0,0,0">
+                <Image Source="Assets/YoutubePlayBtn.jpg" Width="46" Height="29" />
+            </Button>
+            <Button Name="btnUpdateVideo" Click="btnUpdateVideo_Click" Tag="{x:Bind YtLocalFavChannelList.channelId}" ToolTipService.ToolTip="Refresh" RelativePanel.RightOf="btnPlayOnYoutube" Margin="2,0,0,0">
+                <Image Source="Assets/updatearrow.jpg" Width="46" Height="29" />
+            </Button>
+            <Button Name="btnDeleteVideo" Click="btnDeleteVideo_Click" Tag="{x:Bind YtLocalFavChannelList.channelId}" ToolTipService.ToolTip="Delete Channel" RelativePanel.AlignRightWithPanel="True">
+                <Image Source="Assets/trashcan.png" Width="46" Height="29" />
+            </Button>
+        </RelativePanel>
+    </Grid>
+</UserControl>
